@@ -77,8 +77,8 @@ const Calendar = () => {
             <div></div>
           </div>
           <div className = "calendar-weekdays">
-            {dayNames.map(day => (
-              <div key={day} className = "weekday">{day}</div>
+            {dayNames.map((day, index) => (
+              <div key={`oct-${index}`} className = "weekday">{day}</div>
             ))}
           </div>
           <div className = "calendar-days">
@@ -96,8 +96,8 @@ const Calendar = () => {
             </button>
           </div>
           <div className = "calendar-weekdays">
-            {dayNames.map(day => (
-              <div key={day} className = "weekday">{day}</div>
+            {dayNames.map((day, index) => (
+              <div key={`nov-${index}`} className = "weekday">{day}</div>
             ))}
           </div>
           <div className = "calendar-days">

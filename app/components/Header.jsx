@@ -1,97 +1,132 @@
 'use client';
 
-import React from 'react';
-import Image from 'next/image';
 import { Bell, Moon, Sun } from 'lucide-react';
-import { useTheme } from '../contexts/ThemeContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const Header = ({ activeView }) => {
-  const { isDark, toggleTheme, mounted } = useTheme();
-
-  // Show loading state while mounting to prevent hydration issues
-  if (!mounted) {
-    return (
-      <div className = "header">
-        <div className = "header-left">
-          <h1 className = "page-title">Loading...</h1>
-        </div>
-        <div className = "header-right">
-          <div className = "header-actions">
-            <button className = "action-btn">
-              <Bell size={18} />
-            </button>
-            <button className = "action-btn">
-              <Moon size={18} />
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const { isDark, toggleTheme } = useTheme();
 
   const getTitle = () => {
     switch (activeView) {
-      case 'todo': return 'Today';
-      case 'pomodoro': return 'Timer';
-      case 'calendar': return 'Past';
-      case 'summary': return "Today's Summary";
-      case 'habits': return 'Habits';
-      case 'mood': return 'Mood Journal';
-      default: return 'Momentum';
+      case 'todo': 
+        return 'Today';
+      case 'pomodoro': 
+        return 'Timer';
+      case 'calendar': 
+        return 'Past';
+      case 'summary': 
+        return "Today's Summary";
+      case 'habits': 
+        return 'Habits';
+      case 'mood': 
+        return 'Mood Journal';
+      case 'about': 
+        return 'About';
+      default: 
+        return 'Momentum';
     }
   };
 
   const getNavItems = () => {
-    if (activeView === 'todo') {
-      return ['Today', 'Upcoming', 'Inbox', 'Projects'];
+    switch (activeView) {
+      case 'todo':
+        return ['Today', 'Upcoming', 'Inbox', 'Projects'];
+      case 'summary':
+      case 'pomodoro':
+        return ['Home', 'Tasks', 'Calendar', 'Reports'];
+      case 'calendar':
+        return ['Today', 'Calendar', 'Focus'];
+      case 'about':
+        return ['Overview', 'Features', 'Developer'];
+      default:
+        return [];
     }
-    if (activeView === 'summary') {
-      return ['Home', 'Tasks', 'Calendar', 'Reports'];
-    }
-    if (activeView === 'pomodoro') {
-      return ['Home', 'Tasks', 'Calendar', 'Reports'];
-    }
-    if (activeView === 'calendar') {
-      return ['Today', 'Calendar', 'Focus'];
-    }
-    return [];
   };
+
+  const getSubtitle = () => {
+    const today = new Date();
+    
+    if (activeView === 'todo') {
+      const options = { weekday: 'short', month: 'short', day: 'numeric' };
+      return today.toLocaleDateString('en-US', options);
+    }
+    
+    if (activeView === 'summary') {
+      const options = { month: 'long', day: 'numeric', year: 'numeric' };
+      return today.toLocaleDateString('en-US', options);
+    }
+    
+    return null;
+  };
+
+  const handleNotificationClick = () => {
+    // Handle notification click - could open a notification panel
+    console.log('Notifications clicked');
+  };
+
+  const handleNavItemClick = (item) => {
+    // Handle navigation item click
+    console.log(`Navigation item clicked: ${item}`);
+  };
+
+  const navItems = getNavItems();
+  const subtitle = getSubtitle();
 
   return (
     <div className = "header">
       <div className = "header-left">
         <h1 className = "page-title">{getTitle()}</h1>
-        {activeView === 'todo' && (
-          <span className = "page-subtitle">Tue, Oct 15</span>
-        )}
-        {activeView === 'summary' && (
-          <span className = "page-subtitle">June 12, 2024</span>
+        {subtitle && (
+          <span className = "page-subtitle">{subtitle}</span>
         )}
       </div>
       
       <div className = "header-right">
-        <nav className = "header-nav">
-          {getNavItems().map((item, index) => (
-            <button key={index} className = "nav-link">
-              {item}
-            </button>
-          ))}
-        </nav>
+        {navItems.length > 0 && (
+          <nav className = "header-nav" role="navigation" aria-label="Page navigation">
+            {navItems.map((item, index) => (
+              <button 
+                key={`nav-${item}-${index}`} 
+                type="button"
+                className = "nav-link"
+                onClick={() => handleNavItemClick(item)}
+                aria-label={`Navigate to ${item}`}
+              >
+                {item}
+              </button>
+            ))}
+          </nav>
+        )}
         
         <div className = "header-actions">
-          <button className = "action-btn">
-            <Bell size={18} />
+          <button 
+            type="button"
+            className = "action-btn"
+            onClick={handleNotificationClick}
+            aria-label="View notifications"
+          >
+            <Bell size={18} aria-hidden="true" />
           </button>
-          <button className = "action-btn" onClick={toggleTheme}>
-            {isDark ? <Sun size={18} /> : <Moon size={18} />}
+          
+          <button 
+            type="button"
+            className = "action-btn" 
+            onClick={toggleTheme}
+            aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
+          >
+            {isDark ? (
+              <Sun size={18} aria-hidden="true" />
+            ) : (
+              <Moon size={18} aria-hidden="true" />
+            )}
           </button>
+          
           <div className = "user-avatar">
-            <Image 
-              src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop"
-              alt="User"
+            <img 
+              src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" 
+              alt="User profile avatar"
               width={40}
               height={40}
-              className = "avatar-image"
             />
           </div>
         </div>

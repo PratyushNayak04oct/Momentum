@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { CheckSquare, Timer, Calendar, BarChart3, Target, Smile } from 'lucide-react';
+import { CheckSquare, Timer, Calendar, BarChart3, Target, Smile, Info } from 'lucide-react';
 
 const Sidebar = ({ activeView, setActiveView }) => {
   const menuItems = [
@@ -10,18 +9,19 @@ const Sidebar = ({ activeView, setActiveView }) => {
     { id: 'calendar', label: 'Calendar', icon: Calendar },
     { id: 'summary', label: 'Reports', icon: BarChart3 },
     { id: 'habits', label: 'Habits', icon: Target },
-    { id: 'mood', label: 'Notes', icon: Smile }
+    { id: 'mood', label: 'Notes', icon: Smile },
+    { id: 'about', label: 'About', icon: Info }
   ];
 
-  const handleNavClick = (itemId) => {
-    setActiveView(itemId);
+  const handleViewChange = (viewId) => {
+    setActiveView(viewId);
   };
 
   return (
     <div className = "sidebar">
       <div className = "sidebar-header">
         <div className = "logo">
-          <div className = "logo-icon">◆</div>
+          <div className = "logo-icon" aria-hidden="true">◆</div>
           <span className = "logo-text">Momentum</span>
         </div>
       </div>
@@ -29,14 +29,17 @@ const Sidebar = ({ activeView, setActiveView }) => {
       <div className = "sidebar-section">
         <span className = "section-title">Momentum</span>
         <nav className = "nav-menu" role="navigation" aria-label="Main navigation">
-          {menuItems.map(item => {
+          {menuItems.map((item) => {
             const Icon = item.icon;
+            const isActive = activeView === item.id;
+            
             return (
               <button
                 key={item.id}
-                className={`nav-item ${activeView === item.id ? 'active' : ''}`}
-                onClick={() => handleNavClick(item.id)}
-                aria-pressed={activeView === item.id}
+                type="button"
+                className={`nav-item ${isActive ? 'active' : ''}`}
+                onClick={() => handleViewChange(item.id)}
+                aria-current={isActive ? 'page' : undefined}
                 aria-label={`Navigate to ${item.label}`}
               >
                 <Icon size={18} aria-hidden="true" />

@@ -10,6 +10,7 @@ import Calendar from './components/Calendar';
 import DailySummary from './components/DailySummary';
 import HabitTracker from './components/HabitTracker';
 import MoodJournal from './components/MoodJournal';
+import About from './components/About';
 
 export default function HomePage() {
   const [activeView, setActiveView] = useState('todo');
@@ -28,6 +29,8 @@ export default function HomePage() {
         return <HabitTracker />;
       case 'mood':
         return <MoodJournal />;
+      case 'about':
+        return <About />;
       default:
         return <TodoList />;
     }

@@ -138,13 +138,15 @@ export const AppProvider = ({ children }) => {
     const sampleMoods = [
       {
         id: '1',
-        rating: 8,
+        rating: 4,
+        mood: { emoji: '😊', label: 'Happy', value: 4 },
         note: 'Great day at work, feeling productive',
         timestamp: new Date().toISOString()
       },
       {
         id: '2',
-        rating: 6,
+        rating: 3,
+        mood: { emoji: '😐', label: 'Neutral', value: 3 },
         note: 'Normal day, nothing special',
         timestamp: new Date(Date.now() - 86400000).toISOString() // Yesterday
       }

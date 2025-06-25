@@ -16,10 +16,16 @@ const MoodJournal = () => {
     { emoji: '😢', label: 'Very Sad', value: 1 }
   ];
 
+  // Helper function to get mood option from rating
+  const getMoodFromRating = (rating) => {
+    return moodOptions.find(option => option.value === rating) || moodOptions[2]; // Default to neutral
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (selectedMood) {
       addMood({
+        rating: selectedMood.value,
         mood: selectedMood,
         note: note.trim()
       });
@@ -78,16 +84,21 @@ const MoodJournal = () => {
         <div className = "mood-history">
           <h3>Today's Mood Entries</h3>
           <div className = "mood-entries">
-            {todaysMoods.map(mood => (
-              <div key={mood.id} className = "mood-entry-item">
-                <span className = "mood-time">
-                  {new Date(mood.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </span>
-                <span className = "mood-emoji">{mood.mood.emoji}</span>
-                <span className = "mood-text">{mood.mood.label}</span>
-                {mood.note && <p className = "mood-note">{mood.note}</p>}
-              </div>
-            ))}
+            {todaysMoods.map(mood => {
+              // Handle both new format (with mood object) and old format (with just rating)
+              const moodData = mood.mood || getMoodFromRating(mood.rating);
+              
+              return (
+                <div key={mood.id} className = "mood-entry-item">
+                  <span className = "mood-time">
+                    {new Date(mood.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </span>
+                  <span className = "mood-emoji">{moodData.emoji}</span>
+                  <span className = "mood-text">{moodData.label}</span>
+                  {mood.note && <p className = "mood-note">{mood.note}</p>}
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

@@ -21,38 +21,6 @@ export const AppProvider = ({ children }) => {
   const [pomodoroSessions, setPomodoroSessions] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
-  // Initialize with sample data
-  useEffect(() => {
-    const sampleTasks = [
-      {
-        id: '1',
-        title: 'Morning workout',
-        category: 'Personal',
-        priority: 'Medium',
-        completed: false,
-        createdAt: new Date().toISOString()
-      },
-      {
-        id: '2',
-        title: 'Prepare presentation for team meeting',
-        category: 'Work',
-        priority: 'High',
-        completed: false,
-        createdAt: new Date().toISOString()
-      },
-      {
-        id: '3',
-        title: 'Review project proposal',
-        category: 'Work',
-        priority: 'Medium',
-        completed: true,
-        createdAt: new Date().toISOString()
-      }
-    ];
-
-    setTasks(sampleTasks);
-  }, []);
-
   // Task management functions
   const addTask = (task) => {
     const newTask = {

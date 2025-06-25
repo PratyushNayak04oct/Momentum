@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { CheckSquare, Timer, Calendar, BarChart3, Target, Smile, Info } from 'lucide-react';
 
 const Sidebar = ({ activeView, setActiveView }) => {
@@ -21,7 +22,13 @@ const Sidebar = ({ activeView, setActiveView }) => {
     <div className = "sidebar">
       <div className = "sidebar-header">
         <div className = "logo">
-          <div className = "logo-icon" aria-hidden="true">◆</div>
+          <Image 
+            src="/logo.png" 
+            height={100} 
+            width={100} 
+            alt="Momentum Logo" 
+            className = "logo-image"
+          />
           <span className = "logo-text">Momentum</span>
         </div>
       </div>

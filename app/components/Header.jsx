@@ -74,6 +74,7 @@ const Header = ({ activeView }) => {
 
   return (
     <div className = "header">
+      
       <div className = "header-left">
         <h1 className = "page-title">{getTitle()}</h1>
         {subtitle && (

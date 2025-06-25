@@ -4,44 +4,11 @@ import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
 import TaskItem from './TaskItem';
 import AddTaskModal from './AddTaskModal';
-
-// Custom hook to manage tasks (replaces useApp context)
-const useTasks = () => {
-  const [tasks, setTasks] = useState([]);
-
-  const addTask = (newTask) => {
-    const task = {
-      id: Date.now().toString(),
-      ...newTask,
-      completed: false,
-      createdAt: new Date()
-    };
-    setTasks(prevTasks => [...prevTasks, task]);
-  };
-
-  const updateTask = (taskId, updates) => {
-    setTasks(prevTasks => 
-      prevTasks.map(task => 
-        task.id === taskId ? { ...task, ...updates } : task
-      )
-    );
-  };
-
-  const deleteTask = (taskId) => {
-    setTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
-  };
-
-  return { tasks, addTask, updateTask, deleteTask };
-};
+import { useApp } from '../contexts/AppContext';
 
 const TodoList = () => {
-  const { tasks, addTask, updateTask, deleteTask } = useTasks();
+  const { tasks } = useApp(); // Use the context instead of local state
   const [showAddModal, setShowAddModal] = useState(false);
-
-  const handleAddTask = (taskData) => {
-    addTask(taskData);
-    setShowAddModal(false);
-  };
 
   const handleCloseModal = () => {
     setShowAddModal(false);
@@ -82,9 +49,7 @@ const TodoList = () => {
               activeTasks.map(task => (
                 <TaskItem 
                   key={task.id} 
-                  task={task} 
-                  onUpdateTask={updateTask}
-                  onDeleteTask={deleteTask}
+                  task={task}
                 />
               ))
             ) : (
@@ -107,9 +72,7 @@ const TodoList = () => {
               {completedTasks.map(task => (
                 <TaskItem 
                   key={task.id} 
-                  task={task} 
-                  onUpdateTask={updateTask}
-                  onDeleteTask={deleteTask}
+                  task={task}
                 />
               ))}
             </div>
@@ -120,7 +83,6 @@ const TodoList = () => {
       {showAddModal && (
         <AddTaskModal 
           onClose={handleCloseModal}
-          onAddTask={handleAddTask}
         />
       )}
     </div>

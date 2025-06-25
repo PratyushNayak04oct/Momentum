@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Calendar = () => {
@@ -8,7 +8,8 @@ const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
   const dayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
@@ -29,6 +30,17 @@ const Calendar = () => {
     });
   };
 
+  const isToday = (day, month, year) => {
+    const today = new Date();
+    return day === today.getDate() && 
+           month === today.getMonth() && 
+           year === today.getFullYear();
+  };
+
+  const handleDateSelect = (day) => {
+    setSelectedDate(day);
+  };
+
   const renderCalendar = (date) => {
     const daysInMonth = getDaysInMonth(date);
     const firstDay = getFirstDayOfMonth(date);
@@ -36,17 +48,27 @@ const Calendar = () => {
 
     // Empty cells for days before the first day of the month
     for (let i = 0; i < firstDay; i++) {
-      days.push(<div key={`empty-${i}`} className = "calendar-day empty"></div>);
+      days.push(
+        <div 
+          key={`empty-${i}`} 
+          className = "calendar-day empty"
+          aria-hidden="true"
+        />
+      );
     }
 
     // Days of the month
     for (let day = 1; day <= daysInMonth; day++) {
-      const isToday = day === 5 && date.getMonth() === 9; // Highlighting day 5 as shown in image
+      const isTodayDate = isToday(day, date.getMonth(), date.getFullYear());
+      const isSelected = selectedDate === day;
+      
       days.push(
         <button
           key={day}
-          className={`calendar-day ${isToday ? 'today' : ''}`}
-          onClick={() => setSelectedDate(day)}
+          type="button"
+          className={`calendar-day ${isTodayDate ? 'today' : ''} ${isSelected ? 'selected' : ''}`}
+          onClick={() => handleDateSelect(day)}
+          aria-label={`Select ${monthNames[date.getMonth()]} ${day}, ${date.getFullYear()}`}
         >
           {day}
         </button>
@@ -56,58 +78,107 @@ const Calendar = () => {
     return days;
   };
 
+  const getCurrentMonth = () => {
+    return new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+  };
+
+  const getNextMonth = () => {
+    return new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
+  };
+
+  // Sample productivity data - in a real app, this would come from props or context
   const productivityData = [
-    { date: 'Oct 28, 2024', score: 85, note: 'Completed all tasks, felt very productive.' },
-    { date: 'Oct 27, 2024', score: 70, note: 'Some distractions, but overall a good day.' },
-    { date: 'Oct 26, 2024', score: 90, note: 'Focused and efficient, achieved a lot.' },
-    { date: 'Oct 25, 2024', score: 60, note: 'Low energy, struggled to concentrate.' },
-    { date: 'Oct 24, 2024', score: 75, note: 'Steady progress, good work-life balance.' }
+    { 
+      date: `${monthNames[currentDate.getMonth()]} ${Math.max(1, currentDate.getDate() - 3)}, ${currentDate.getFullYear()}`, 
+      score: 85, 
+      note: 'Completed all tasks, felt very productive.' 
+    },
+    { 
+      date: `${monthNames[currentDate.getMonth()]} ${Math.max(1, currentDate.getDate() - 2)}, ${currentDate.getFullYear()}`, 
+      score: 70, 
+      note: 'Some distractions, but overall a good day.' 
+    },
+    { 
+      date: `${monthNames[currentDate.getMonth()]} ${Math.max(1, currentDate.getDate() - 1)}, ${currentDate.getFullYear()}`, 
+      score: 90, 
+      note: 'Focused and efficient, achieved a lot.' 
+    },
+    { 
+      date: `${monthNames[currentDate.getMonth()]} ${currentDate.getDate()}, ${currentDate.getFullYear()}`, 
+      score: 60, 
+      note: 'Low energy, struggled to concentrate.' 
+    },
+    { 
+      date: `${monthNames[currentDate.getMonth()]} ${Math.min(getDaysInMonth(currentDate), currentDate.getDate() + 1)}, ${currentDate.getFullYear()}`, 
+      score: 75, 
+      note: 'Steady progress, good work-life balance.' 
+    }
   ];
 
   return (
     <div className = "calendar-container">
       <div className = "calendar-grid">
-        {/* October 2024 Calendar */}
+        {/* Current Month Calendar */}
         <div className = "calendar-month">
           <div className = "calendar-header">
-            <button onClick={() => navigateMonth(-1)} className = "nav-btn">
+            <button 
+              type="button"
+              onClick={() => navigateMonth(-1)} 
+              className = "nav-btn"
+              aria-label="Previous month"
+            >
               <ChevronLeft size={20} />
             </button>
-            <h3>October 2024</h3>
-            <div></div>
+            <h3>
+              {monthNames[getCurrentMonth().getMonth()]} {getCurrentMonth().getFullYear()}
+            </h3>
+            <div aria-hidden="true" />
           </div>
           <div className = "calendar-weekdays">
             {dayNames.map((day, index) => (
-              <div key={`oct-${index}`} className = "weekday">{day}</div>
+              <div key={`current-${day}-${index}`} className = "weekday">
+                {day}
+              </div>
             ))}
           </div>
           <div className = "calendar-days">
-            {renderCalendar(new Date(2024, 9, 1))}
+            {renderCalendar(getCurrentMonth())}
           </div>
         </div>
 
-        {/* November 2024 Calendar */}
+        {/* Next Month Calendar */}
         <div className = "calendar-month">
           <div className = "calendar-header">
-            <div></div>
-            <h3>November 2024</h3>
-            <button onClick={() => navigateMonth(1)} className = "nav-btn">
+            <div aria-hidden="true" />
+            <h3>
+              {monthNames[getNextMonth().getMonth()]} {getNextMonth().getFullYear()}
+            </h3>
+            <button 
+              type="button"
+              onClick={() => navigateMonth(1)} 
+              className = "nav-btn"
+              aria-label="Next month"
+            >
               <ChevronRight size={20} />
             </button>
           </div>
           <div className = "calendar-weekdays">
             {dayNames.map((day, index) => (
-              <div key={`nov-${index}`} className = "weekday">{day}</div>
+              <div key={`next-${day}-${index}`} className = "weekday">
+                {day}
+              </div>
             ))}
           </div>
           <div className = "calendar-days">
-            {renderCalendar(new Date(2024, 10, 1))}
+            {renderCalendar(getNextMonth())}
           </div>
         </div>
       </div>
 
       <div className = "productivity-history">
-        <h2>October 2024</h2>
+        <h2>
+          {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+        </h2>
         <div className = "productivity-table">
           <div className = "table-header">
             <div className = "col-date">Date</div>
@@ -115,14 +186,14 @@ const Calendar = () => {
             <div className = "col-notes">Notes</div>
           </div>
           {productivityData.map((entry, index) => (
-            <div key={index} className = "table-row">
+            <div key={`productivity-${index}`} className = "table-row">
               <div className = "col-date">{entry.date}</div>
               <div className = "col-score">
-                <div className = "score-bar">
+                <div className = "score-bar" role="progressbar" aria-valuenow={entry.score} aria-valuemin="0" aria-valuemax="100">
                   <div 
                     className = "score-fill" 
                     style={{ width: `${entry.score}%` }}
-                  ></div>
+                  />
                 </div>
                 <span className = "score-number">{entry.score}</span>
               </div>

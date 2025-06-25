@@ -56,12 +56,12 @@ const TodoList = () => {
   const completedTasks = tasks.filter(task => task.completed);
 
   return (
-    <div className="todo-container">
-      <div className="todo-content">
-        <div className="todo-header">
-          <h1 className="page-title">Todo List</h1>
+    <div className = "todo-container">
+      <div className = "todo-content">
+        <div className = "todo-header">
+          <h1 className = "page-title">Todo List</h1>
           <button 
-            className="add-task-btn primary"
+            className = "add-task-btn primary"
             onClick={handleOpenModal}
             aria-label="Add new task"
           >
@@ -70,14 +70,14 @@ const TodoList = () => {
           </button>
         </div>
 
-        <div className="tasks-section">
-          <div className="section-header">
-            <h2 className="section-title">
+        <div className = "tasks-section">
+          <div className = "section-header">
+            <h2 className = "section-title">
               Active Tasks ({activeTasks.length})
             </h2>
           </div>
           
-          <div className="tasks-list">
+          <div className = "tasks-list">
             {activeTasks.length > 0 ? (
               activeTasks.map(task => (
                 <TaskItem 
@@ -88,7 +88,7 @@ const TodoList = () => {
                 />
               ))
             ) : (
-              <div className="empty-state">
+              <div className = "empty-state">
                 <p>No active tasks. Add a task to get started!</p>
               </div>
             )}
@@ -96,14 +96,14 @@ const TodoList = () => {
         </div>
 
         {completedTasks.length > 0 && (
-          <div className="tasks-section">
-            <div className="section-header">
-              <h2 className="section-title">
+          <div className = "tasks-section">
+            <div className = "section-header">
+              <h2 className = "section-title">
                 Completed Tasks ({completedTasks.length})
               </h2>
             </div>
             
-            <div className="tasks-list completed-tasks">
+            <div className = "tasks-list completed-tasks">
               {completedTasks.map(task => (
                 <TaskItem 
                   key={task.id} 

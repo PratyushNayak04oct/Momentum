@@ -168,7 +168,7 @@ body {
 .page-title {
   font-size: 32px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--text-primary) ; 
 }
 
 .page-subtitle {
@@ -256,6 +256,14 @@ body {
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 24px;
+}
+
+.todo-container > .todo-content > .todo-header > h1{
+  margin-bottom: 20px;
+}
+
+.todo-container > .todo-content > .todo-header > button{
+  margin-bottom: 20px;
 }
 
 .tasks-list {

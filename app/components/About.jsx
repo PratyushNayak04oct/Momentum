@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckSquare, Timer, Calendar, BarChart3, Target, Smile, User, Code, Heart } from 'lucide-react';
+import { CheckSquare, Timer, Calendar, BarChart3, Target, Smile, User, Code, Heart, Database } from 'lucide-react';
 
 const About = () => {
   const features = [
@@ -93,15 +93,19 @@ const About = () => {
                 <div className = "developer-skills">
                   <span className = "skill-tag">
                     <Code size={14} aria-hidden="true" />
-                    React
+                    Next JS
                   </span>
                   <span className = "skill-tag">
                     <Code size={14} aria-hidden="true" />
-                    JavaScript
+                    React JS
+                  </span>
+                  <span className = "skill-tag">
+                    <Database size={14} aria-hidden="true" />
+                    Mongo DB
                   </span>
                   <span className = "skill-tag">
                     <Heart size={14} aria-hidden="true" />
-                    UX Design
+                    Tailwind CSS
                   </span>
                 </div>
               </div>

@@ -72,7 +72,7 @@ const HabitTracker = () => {
               </div>
             </div>
             <button
-              className={`habit-toggle ${habit.completedToday ? 'completed' : ''}`}
+              className = {`habit-toggle ${habit.completedToday ? 'completed' : ''}`}
               onClick={() => toggleHabit(habit.id)}
             >
               {habit.completedToday ? '✓' : '○'}

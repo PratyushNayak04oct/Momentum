@@ -36,19 +36,19 @@ const TaskItem = ({ task }) => {
   };
 
   return (
-    <div className = {`task-item ${task.completed ? 'completed' : ''}`}>
+    <div className={`task-item ${task.completed ? 'completed' : ''}`}>
       <div className = "task-content">
         <div className = "task-main">
           <h3 className = "task-title">{task.title}</h3>
           <div className = "task-tags">
             <span 
-              className = {`task-category ${
+              className={`task-category ${
                 task.category === 'Work' ? 'category-work' : 'category-personal'
               }`}
             >
               {task.category}
             </span>
-            <span className = {`task-priority ${getPriorityColor(task.priority)}`}>
+            <span className={`task-priority ${getPriorityColor(task.priority)}`}>
               {getPriorityLabel(task.priority)}
             </span>
           </div>
@@ -56,7 +56,7 @@ const TaskItem = ({ task }) => {
       </div>
       <button 
         type="button"
-        className = {`task-checkbox ${task.completed ? 'checked' : ''}`}
+        className={`task-checkbox ${task.completed ? 'checked' : ''}`}
         onClick={toggleComplete}
         aria-label={`Mark task "${task.title}" as ${task.completed ? 'incomplete' : 'complete'}`}
       >

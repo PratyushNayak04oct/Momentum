@@ -124,13 +124,13 @@ const PomodoroTimer = () => {
     <div className = "pomodoro-container">
       <div className = "timer-settings">
         <button 
-          className={`preset-btn ${!showSettings ? 'active' : ''}`}
+          className = {`preset-btn ${!showSettings ? 'active' : ''}`}
           onClick={() => setShowSettings(false)}
         >
           25/5
         </button>
         <button 
-          className={`preset-btn ${showSettings ? 'active' : ''}`}
+          className = {`preset-btn ${showSettings ? 'active' : ''}`}
           onClick={() => setShowSettings(true)}
         >
           Custom

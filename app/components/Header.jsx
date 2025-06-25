@@ -6,7 +6,28 @@ import { Bell, Moon, Sun } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 const Header = ({ activeView }) => {
-  const { isDark, toggleTheme } = useTheme();
+  const { isDark, toggleTheme, mounted } = useTheme();
+
+  // Show loading state while mounting to prevent hydration issues
+  if (!mounted) {
+    return (
+      <div className = "header">
+        <div className = "header-left">
+          <h1 className = "page-title">Loading...</h1>
+        </div>
+        <div className = "header-right">
+          <div className = "header-actions">
+            <button className = "action-btn">
+              <Bell size={18} />
+            </button>
+            <button className = "action-btn">
+              <Moon size={18} />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const getTitle = () => {
     switch (activeView) {

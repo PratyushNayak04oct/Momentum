@@ -5,7 +5,6 @@ import { Plus } from 'lucide-react';
 import TaskItem from './TaskItem';
 import AddTaskModal from './AddTaskModal';
 
-// Custom hook to manage tasks (replaces useApp context)
 const useTasks = () => {
   const [tasks, setTasks] = useState([]);
 

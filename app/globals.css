@@ -1438,37 +1438,30 @@ body {
 }
 
 /* Audio Controls Panel */
+/* Enhanced Audio Controls Panel - Centered and Larger */
 .audio-controls-panel {
   background-color: var(--bg-secondary);
   border: 2px solid var(--primary-color);
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 32px;
+  border-radius: 20px;
+  padding: 32px;
+  margin: 0 auto 40px auto;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 24px;
   animation: slideInDown 0.3s ease-out;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2);
+  position: relative;
 }
 
-@keyframes slideInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Circular Progress Container */
+/* Larger Circular Progress Container */
 .audio-progress-container {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 8px;
 }
 
 .circular-progress {
@@ -1479,18 +1472,30 @@ body {
 }
 
 .progress-ring {
+  width: 120px;
+  height: 120px;
   transform: rotate(-90deg);
-  filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.2));
+  filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3));
+}
+
+.progress-ring-circle,
+.progress-ring-circle-bg {
+  r: 52;
+  cx: 60;
+  cy: 60;
+  stroke-width: 6;
 }
 
 .progress-ring-circle-bg {
-  opacity: 0.2;
+  opacity: 0.15;
+  color: var(--border-color);
 }
 
 .progress-ring-circle {
-  transition: stroke-dashoffset 0.1s ease;
+  transition: stroke-dashoffset 0.2s ease;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 2px var(--primary-color));
+  color: var(--primary-color);
+  filter: drop-shadow(0 0 4px var(--primary-color));
 }
 
 .progress-icon {
@@ -1502,74 +1507,69 @@ body {
   animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    opacity: 0.7;
-    transform: translate(-50%, -50%) scale(1.1);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
+.progress-icon svg {
+  width: 32px;
+  height: 32px;
 }
 
-/* Audio Control Buttons */
+/* Enhanced Audio Control Buttons */
 .audio-controls {
   display: flex;
-  gap: 12px;
+  gap: 20px;
   align-items: center;
+  justify-content: center;
 }
 
 .audio-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 56px;
+  height: 56px;
   background-color: var(--primary-color);
   color: white;
-  border: 2px solid var(--primary-color);
-  border-radius: 50%;
+  border: 3px solid var(--primary-color);
+  border-radius: 16px;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-size: 14px;
+  font-size: 18px;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
 }
 
 .audio-btn:hover {
   background-color: var(--primary-hover);
   border-color: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
 }
 
 .audio-btn:active {
-  transform: translateY(0);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .audio-btn.stop-btn {
-  background-color: var(--error-color);
-  border-color: var(--error-color);
+  background-color: var(--error-color, #ef4444);
+  border-color: var(--error-color, #ef4444);
 }
 
 .audio-btn.stop-btn:hover {
   background-color: #dc2626;
   border-color: #dc2626;
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.4);
 }
 
-/* Audio Info */
+/* Audio Info Text */
 .audio-info {
   text-align: center;
+  margin-top: 8px;
 }
 
 .audio-text {
-  font-size: 14px;
-  color: var(--text-secondary);
+  font-size: 16px;
+  color: var(--text-primary);
   font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 /* Enhanced Responsive Design for Audio Controls */
@@ -1577,9 +1577,259 @@ body {
 /* Large Desktop - 1200px+ */
 @media (min-width: 1200px) {
   .audio-controls-panel {
+    padding: 40px;
+    max-width: 600px;
+    gap: 28px;
+  }
+
+  .progress-ring {
+    width: 140px;
+    height: 140px;
+  }
+
+  .progress-ring-circle,
+  .progress-ring-circle-bg {
+    r: 62;
+    cx: 70;
+    cy: 70;
+    stroke-width: 7;
+  }
+
+  .progress-icon svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .audio-btn {
+    width: 64px;
+    height: 64px;
+    font-size: 20px;
+  }
+
+  .audio-controls {
+    gap: 24px;
+  }
+
+  .audio-text {
+    font-size: 18px;
+  }
+}
+
+/* Desktop - 1024px to 1199px */
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .audio-controls-panel {
+    padding: 36px;
+    max-width: 550px;
+    gap: 26px;
+  }
+
+  .progress-ring {
+    width: 130px;
+    height: 130px;
+  }
+
+  .progress-ring-circle,
+  .progress-ring-circle-bg {
+    r: 57;
+    cx: 65;
+    cy: 65;
+    stroke-width: 6;
+  }
+
+  .progress-icon svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .audio-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 19px;
+  }
+
+  .audio-controls {
+    gap: 22px;
+  }
+
+  .audio-text {
+    font-size: 17px;
+  }
+}
+
+/* Tablet - 768px to 1023px */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .audio-controls-panel {
+    padding: 28px;
+    max-width: 480px;
+    gap: 22px;
+  }
+
+  .progress-ring {
+    width: 110px;
+    height: 110px;
+  }
+
+  .progress-ring-circle,
+  .progress-ring-circle-bg {
+    r: 47;
+    cx: 55;
+    cy: 55;
+    stroke-width: 5;
+  }
+
+  .progress-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .audio-btn {
+    width: 52px;
+    height: 52px;
+    font-size: 16px;
+  }
+
+  .audio-controls {
+    gap: 18px;
+  }
+
+  .audio-text {
+    font-size: 15px;
+  }
+}
+
+/* Small Tablet - 481px to 767px */
+@media (max-width: 767px) and (min-width: 481px) {
+  .audio-controls-panel {
     padding: 24px;
-    max-width: 400px;
-    margin: 0 auto 32px auto;
+    max-width: 420px;
+    gap: 20px;
+  }
+
+  .progress-ring {
+    width: 100px;
+    height: 100px;
+  }
+
+  .progress-ring-circle,
+  .progress-ring-circle-bg {
+    r: 42;
+    cx: 50;
+    cy: 50;
+    stroke-width: 5;
+  }
+
+  .progress-icon svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .audio-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 15px;
+    border-radius: 14px;
+  }
+
+  .audio-controls {
+    gap: 16px;
+  }
+
+  .audio-text {
+    font-size: 14px;
+  }
+}
+
+/* Mobile - 480px and below */
+@media (max-width: 480px) {
+  .audio-controls-panel {
+    padding: 20px;
+    margin-bottom: 28px;
+    gap: 18px;
+    border-radius: 16px;
+  }
+
+  .progress-ring {
+    width: 90px;
+    height: 90px;
+  }
+
+  .progress-ring-circle,
+  .progress-ring-circle-bg {
+    r: 37;
+    cx: 45;
+    cy: 45;
+    stroke-width: 4;
+  }
+
+  .progress-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .audio-btn {
+    width: 46px;
+    height: 46px;
+    font-size: 14px;
+    border-radius: 12px;
+  }
+
+  .audio-controls {
+    gap: 14px;
+  }
+
+  .audio-text {
+    font-size: 13px;
+  }
+}
+
+/* Extra Small Mobile - 360px and below */
+@media (max-width: 360px) {
+  .audio-controls-panel {
+    padding: 16px;
+    margin-bottom: 24px;
+    gap: 16px;
+  }
+
+  .progress-ring {
+    width: 80px;
+    height: 80px;
+  }
+
+  .progress-ring-circle,
+  .progress-ring-circle-bg {
+    r: 32;
+    cx: 40;
+    cy: 40;
+    stroke-width: 4;
+  }
+
+  .progress-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .audio-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
+
+  .audio-controls {
+    gap: 12px;
+  }
+
+  .audio-text {
+    font-size: 12px;
+  }
+}
+
+/* Landscape Mobile - height constraint */
+@media (max-height: 500px) and (orientation: landscape) {
+  .audio-controls-panel {
+    padding: 12px;
+    margin-bottom: 16px;
+    gap: 12px;
   }
 
   .progress-ring {
@@ -1589,82 +1839,10 @@ body {
 
   .progress-ring-circle,
   .progress-ring-circle-bg {
-    r: 31;
+    r: 27;
     cx: 35;
     cy: 35;
-    stroke-width: 5;
-  }
-
-  .audio-btn {
-    width: 44px;
-    height: 44px;
-  }
-
-  .progress-icon svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  .audio-text {
-    font-size: 16px;
-  }
-}
-
-/* Tablet Portrait - 768px to 1199px */
-@media (max-width: 1199px) and (min-width: 769px) {
-  .audio-controls-panel {
-    padding: 20px;
-    margin-bottom: 28px;
-  }
-
-  .progress-ring {
-    width: 65px;
-    height: 65px;
-  }
-
-  .progress-ring-circle,
-  .progress-ring-circle-bg {
-    r: 28;
-    cx: 32.5;
-    cy: 32.5;
-    stroke-width: 4;
-  }
-
-  .audio-btn {
-    width: 42px;
-    height: 42px;
-  }
-
-  .progress-icon svg {
-    width: 20px;
-    height: 20px;
-  }
-}
-
-/* Tablet Portrait - 768px and below */
-@media (max-width: 768px) {
-  .audio-controls-panel {
-    padding: 16px;
-    margin-bottom: 24px;
-    gap: 14px;
-  }
-
-  .progress-ring {
-    width: 55px;
-    height: 55px;
-  }
-
-  .progress-ring-circle,
-  .progress-ring-circle-bg {
-    r: 23;
-    cx: 27.5;
-    cy: 27.5;
-    stroke-width: 4;
-  }
-
-  .audio-btn {
-    width: 38px;
-    height: 38px;
+    stroke-width: 3;
   }
 
   .progress-icon svg {
@@ -1672,91 +1850,14 @@ body {
     height: 18px;
   }
 
-  .audio-controls {
-    gap: 10px;
-  }
-
-  .audio-text {
-    font-size: 14px;
-  }
-}
-
-/* Small Mobile - 480px and below */
-@media (max-width: 480px) {
-  .audio-controls-panel {
-    padding: 12px;
-    margin-bottom: 20px;
-    gap: 12px;
-    border-radius: 12px;
-  }
-
-  .progress-ring {
-    width: 50px;
-    height: 50px;
-  }
-
-  .progress-ring-circle,
-  .progress-ring-circle-bg {
-    r: 21;
-    cx: 25;
-    cy: 25;
-    stroke-width: 3;
-  }
-
-  .audio-controls {
-    gap: 8px;
-  }
-
   .audio-btn {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-  }
-
-  .progress-icon svg {
-    width: 16px;
-    height: 16px;
-  }
-
-  .audio-text {
+    width: 38px;
+    height: 38px;
     font-size: 12px;
   }
-}
-
-/* Extra Small Mobile - 360px and below */
-@media (max-width: 360px) {
-  .audio-controls-panel {
-    padding: 10px;
-    margin-bottom: 16px;
-    gap: 10px;
-  }
-
-  .progress-ring {
-    width: 45px;
-    height: 45px;
-  }
-
-  .progress-ring-circle,
-  .progress-ring-circle-bg {
-    r: 18;
-    cx: 22.5;
-    cy: 22.5;
-    stroke-width: 3;
-  }
-
-  .audio-btn {
-    width: 30px;
-    height: 30px;
-    border-radius: 6px;
-  }
-
-  .progress-icon svg {
-    width: 14px;
-    height: 14px;
-  }
 
   .audio-controls {
-    gap: 6px;
+    gap: 10px;
   }
 
   .audio-text {
@@ -1764,64 +1865,31 @@ body {
   }
 }
 
-/* Landscape Mobile - height constraint */
-@media (max-height: 500px) and (orientation: landscape) {
-  .audio-controls-panel {
-    padding: 8px;
-    margin-bottom: 12px;
-    gap: 8px;
-  }
-
-  .progress-ring {
-    width: 40px;
-    height: 40px;
-  }
-
-  .progress-ring-circle,
-  .progress-ring-circle-bg {
-    r: 16;
-    cx: 20;
-    cy: 20;
-    stroke-width: 2;
-  }
-
-  .audio-btn {
-    width: 28px;
-    height: 28px;
-  }
-
-  .progress-icon svg {
-    width: 12px;
-    height: 12px;
-  }
-
-  .audio-text {
-    font-size: 10px;
-  }
-}
-
-/* High DPI / Retina Display Adjustments */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .progress-ring-circle,
-  .progress-ring-circle-bg {
-    stroke-width: calc(var(--stroke-width, 4) * 0.8);
-  }
-  
-  .audio-controls-panel {
-    border-width: 1px;
-  }
-}
-
 /* Touch Device Optimizations */
 @media (hover: none) and (pointer: coarse) {
   .audio-btn {
-    min-width: 44px;
-    min-height: 44px;
+    min-width: 48px;
+    min-height: 48px;
   }
   
   .audio-btn:active {
     transform: scale(0.95);
     transition: transform 0.1s ease;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .audio-controls-panel {
+    border-width: 3px;
+  }
+  
+  .audio-btn {
+    border-width: 3px;
+  }
+  
+  .progress-ring-circle {
+    stroke-width: 8;
   }
 }
 
@@ -1840,7 +1908,7 @@ body {
   }
   
   .audio-btn {
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
   }
 }
 

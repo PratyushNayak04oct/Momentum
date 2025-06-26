@@ -1106,6 +1106,7 @@ body {
   max-width: 600px;
   margin: 0 auto;
   text-align: center;
+  padding: 20px;
 }
 
 .timer-settings {
@@ -1117,9 +1118,9 @@ body {
 
 .preset-btn {
   padding: 12px 24px;
-  background-color: var(--bg-secondary);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-color);
+  background-color: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
   font-size: 14px;
   font-weight: 500;
@@ -1128,14 +1129,14 @@ body {
 }
 
 .preset-btn:hover {
-  background-color: var(--bg-tertiary);
-  color: var(--text-primary);
+  background-color: #f1f5f9;
+  color: #1e293b;
 }
 
 .preset-btn.active {
-  background-color: var(--primary-color);
+  background-color: #3b82f6;
   color: white;
-  border-color: var(--primary-color);
+  border-color: #3b82f6;
 }
 
 .timer-display {
@@ -1160,35 +1161,41 @@ body {
 .time-value {
   font-size: 64px;
   font-weight: 300;
-  color: var(--text-primary);
+  color: #1e293b;
   padding: 16px 24px;
-  background-color: var(--bg-secondary);
+  background-color: #f8fafc;
   border-radius: 16px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #e2e8f0;
   min-width: 120px;
 }
 
 .time-separator {
   font-size: 48px;
   font-weight: 300;
-  color: var(--text-primary);
+  color: #1e293b;
   margin-top: -40px;
 }
 
 .time-label {
   font-size: 14px;
-  color: var(--text-muted);
+  color: #64748b;
   font-weight: 500;
 }
 
 .timer-settings-panel {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 24px;
   margin-bottom: 32px;
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
@@ -1201,15 +1208,15 @@ body {
 .setting-group label {
   font-size: 14px;
   font-weight: 500;
-  color: var(--text-primary);
+  color: #1e293b;
 }
 
 .setting-group input {
   padding: 12px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: white;
+  color: #1e293b;
   font-size: 14px;
 }
 
@@ -1224,42 +1231,45 @@ body {
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: var(--text-primary);
+  color: #1e293b;
   cursor: pointer;
 }
 
 .checkbox-label input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: var(--primary-color);
+  accent-color: #3b82f6;
+}
+
+.save-btn {
+  padding: 12px 32px;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: center;
+}
+
+.save-btn:hover {
+  background-color: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
 }
 
 .timer-controls {
   margin-bottom: 32px;
+  display: flex;
+  gap: 40px;
+  justify-content: center;
 }
 
-.start-btn {
+.start-btn, .reset-btn {
   padding: 16px 48px;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 16px;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin-right: 40px;
-}
-
-.start-btn:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
-}
-
-.reset-btn {
-  padding: 16px 48px;
-  background-color: var(--primary-color);
+  background-color: #3b82f6;
   color: white;
   border: none;
   border-radius: 16px;
@@ -1269,8 +1279,8 @@ body {
   transition: all 0.2s ease;
 }
 
-.reset-btn:hover {
-  background-color: var(--primary-hover);
+.start-btn:hover, .reset-btn:hover {
+  background-color: #2563eb;
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
 }
@@ -1285,12 +1295,122 @@ body {
 .session-type {
   font-size: 18px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: #1e293b;
 }
 
 .round-counter {
   font-size: 14px;
-  color: var(--text-muted);
+  color: #64748b;
+}
+
+/* Tablet Responsive - max-width: 768px */
+@media (max-width: 768px) {
+  .pomodoro-container {
+    padding: 16px;
+  }
+
+  .time-value {
+    font-size: 48px;
+    padding: 12px 16px;
+    min-width: 100px;
+  }
+
+  .time-separator {
+    font-size: 36px;
+    margin-top: -30px;
+  }
+
+  .timer-controls {
+    gap: 24px;
+  }
+
+  .start-btn, .reset-btn {
+    padding: 14px 32px;
+    font-size: 16px;
+  }
+
+  .settings-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .setting-checkboxes {
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+}
+
+/* Mobile Responsive - max-width: 480px */
+@media (max-width: 480px) {
+  .pomodoro-container {
+    padding: 12px;
+  }
+
+  .timer-settings {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .preset-btn {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .time-numbers {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .time-separator {
+    display: none;
+  }
+
+  .time-value {
+    font-size: 36px;
+    padding: 12px 16px;
+    min-width: 80px;
+  }
+
+  .timer-display {
+    margin-bottom: 32px;
+  }
+
+  .settings-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .setting-checkboxes {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .timer-controls {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .start-btn, .reset-btn {
+    padding: 16px 32px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .session-info {
+    margin-top: 16px;
+  }
+
+  .session-type {
+    font-size: 16px;
+  }
+
+  .round-counter {
+    font-size: 13px;
+  }
 }
 
 /* Calendar */

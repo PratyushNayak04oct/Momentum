@@ -26,6 +26,13 @@ const PomodoroTimer = () => {
     autoStart: false,
     alerts: false
   });
+  const [tempSettings, setTempSettings] = useState({
+    workTime: 25,
+    breakTime: 5,
+    rounds: 4,
+    autoStart: false,
+    alerts: false
+  });
   const [currentRound, setCurrentRound] = useState(1);
   const [showSettings, setShowSettings] = useState(false);
 
@@ -107,31 +114,70 @@ const PomodoroTimer = () => {
 
   const handleWorkTimeChange = (e) => {
     const value = parseInt(e.target.value) || 1;
-    setSettings({ ...settings, workTime: value });
+    setTempSettings({ ...tempSettings, workTime: value });
   };
 
   const handleBreakTimeChange = (e) => {
     const value = parseInt(e.target.value) || 1;
-    setSettings({ ...settings, breakTime: value });
+    setTempSettings({ ...tempSettings, breakTime: value });
   };
 
   const handleRoundsChange = (e) => {
     const value = parseInt(e.target.value) || 1;
-    setSettings({ ...settings, rounds: value });
+    setTempSettings({ ...tempSettings, rounds: value });
+  };
+
+  const handleAutoStartChange = (e) => {
+    setTempSettings({ ...tempSettings, autoStart: e.target.checked });
+  };
+
+  const handleAlertsChange = (e) => {
+    setTempSettings({ ...tempSettings, alerts: e.target.checked });
+  };
+
+  const saveSettings = () => {
+    setSettings(tempSettings);
+    setTimeLeft(tempSettings.workTime * 60);
+    setIsRunning(false);
+    setIsBreak(false);
+    setCurrentRound(1);
+  };
+
+  const handlePresetClick = (isCustom) => {
+    setShowSettings(isCustom);
+    if (!isCustom) {
+      // Reset to default 25/5 settings
+      const defaultSettings = {
+        workTime: 25,
+        breakTime: 5,
+        rounds: 4,
+        autoStart: false,
+        alerts: false
+      };
+      setSettings(defaultSettings);
+      setTempSettings(defaultSettings);
+      setTimeLeft(25 * 60);
+      setIsRunning(false);
+      setIsBreak(false);
+      setCurrentRound(1);
+    } else {
+      // Set temp settings to current settings when opening custom mode
+      setTempSettings(settings);
+    }
   };
 
   return (
     <div className = "pomodoro-container">
       <div className = "timer-settings">
         <button 
-          className = {`preset-btn ${!showSettings ? 'active' : ''}`}
-          onClick={() => setShowSettings(false)}
+          className={`preset-btn ${!showSettings ? 'active' : ''}`}
+          onClick={() => handlePresetClick(false)}
         >
           25/5
         </button>
         <button 
-          className = {`preset-btn ${showSettings ? 'active' : ''}`}
-          onClick={() => setShowSettings(true)}
+          className={`preset-btn ${showSettings ? 'active' : ''}`}
+          onClick={() => handlePresetClick(true)}
         >
           Custom
         </button>
@@ -153,48 +199,50 @@ const PomodoroTimer = () => {
 
       {showSettings && (
         <div className = "timer-settings-panel">
-          <div className = "setting-group">
-            <label htmlFor="work-time">Work</label>
-            <input
-              id="work-time"
-              type="number"
-              value={settings.workTime}
-              onChange={handleWorkTimeChange}
-              min="1"
-              max="60"
-            />
-          </div>
-          
-          <div className = "setting-group">
-            <label htmlFor="break-time">Break</label>
-            <input
-              id="break-time"
-              type="number"
-              value={settings.breakTime}
-              onChange={handleBreakTimeChange}
-              min="1"
-              max="30"
-            />
-          </div>
-          
-          <div className = "setting-group">
-            <label htmlFor="rounds">Rounds</label>
-            <input
-              id="rounds"
-              type="number"
-              value={settings.rounds}
-              onChange={handleRoundsChange}
-              min="1"
-              max="10"
-            />
+          <div className = "settings-grid">
+            <div className = "setting-group">
+              <label htmlFor="work-time">Work</label>
+              <input
+                id="work-time"
+                type="number"
+                value={tempSettings.workTime}
+                onChange={handleWorkTimeChange}
+                min="1"
+                max="60"
+              />
+            </div>
+            
+            <div className = "setting-group">
+              <label htmlFor="break-time">Break</label>
+              <input
+                id="break-time"
+                type="number"
+                value={tempSettings.breakTime}
+                onChange={handleBreakTimeChange}
+                min="1"
+                max="30"
+              />
+            </div>
+            
+            <div className = "setting-group">
+              <label htmlFor="rounds">Rounds</label>
+              <input
+                id="rounds"
+                type="number"
+                value={tempSettings.rounds}
+                onChange={handleRoundsChange}
+                min="1"
+                max="10"
+              />
+            </div>
           </div>
           
           <div className = "setting-checkboxes">
             <label className = "checkbox-label">
               <input
                 type="checkbox"
-                checked={settings.autoStart}
-                onChange={(e) => setSettings({ ...settings, autoStart: e.target.checked })}
+                checked={tempSettings.autoStart}
+                onChange={handleAutoStartChange}
               />
               <span>Auto-start</span>
             </label>
@@ -202,12 +250,16 @@ const PomodoroTimer = () => {
             <label className = "checkbox-label">
               <input
                 type="checkbox"
-                checked={settings.alerts}
-                onChange={(e) => setSettings({ ...settings, alerts: e.target.checked })}
+                checked={tempSettings.alerts}
+                onChange={handleAlertsChange}
               />
               <span>Alerts</span>
             </label>
           </div>
+          
+          <button className = "save-btn" onClick={saveSettings}>
+            Save Settings
+          </button>
         </div>
       )}
 
@@ -228,7 +280,7 @@ const PomodoroTimer = () => {
           Round {currentRound} of {settings.rounds}
         </div>
       </div>
-    </div>
+      </div>
   );
 };
 

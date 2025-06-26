@@ -3355,7 +3355,7 @@ body {
 
 .mood-actions {
   display: flex;
-  gap: 4px;
+  gap: 8px;
   opacity: 0;
   transition: opacity 0.2s ease;
 }
@@ -3366,33 +3366,50 @@ body {
 
 .edit-btn,
 .delete-btn {
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .edit-btn {
-  background-color: transparent;
-  color: var(--primary-color);
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  border: 2px solid transparent;
 }
 
 .edit-btn:hover {
-  background-color: rgba(59, 130, 246, 0.1);
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.edit-btn:active {
+  transform: translateY(0);
 }
 
 .delete-btn {
-  background-color: transparent;
-  color: var(--error-color);
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  border: 2px solid transparent;
 }
 
 .delete-btn:hover {
-  background-color: rgba(239, 68, 68, 0.1);
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+.delete-btn:active {
+  transform: translateY(0);
 }
 
 .empty-state {
@@ -3515,6 +3532,14 @@ body {
   .mood-actions {
     opacity: 1;
     margin-left: auto;
+    gap: 6px;
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
   }
   
   .empty-state {
@@ -3572,6 +3597,17 @@ body {
   .mood-time {
     min-width: auto;
   }
+  
+  .mood-actions {
+    gap: 4px;
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+  }
 }
 
 /* Dark mode adjustments */
@@ -3583,12 +3619,22 @@ body {
   background-color: var(--bg-tertiary);
 }
 
+.dark .edit-btn {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+}
+
 .dark .edit-btn:hover {
-  background-color: rgba(59, 130, 246, 0.2);
+  background: linear-gradient(135deg, #1d4ed8, #1e3a8a);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+}
+
+.dark .delete-btn {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
 }
 
 .dark .delete-btn:hover {
-  background-color: rgba(239, 68, 68, 0.2);
+  background: linear-gradient(135deg, #b91c1c, #991b1b);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
 }
 
 .dark .mood-option.selected {
@@ -3596,7 +3642,6 @@ body {
 }
 
 /* Responsive Design */
-
 @media (max-width: 768px) {
   .app {
     flex-direction: column;

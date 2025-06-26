@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { CheckSquare, Timer, Calendar, BarChart3, Target, Smile, User, Code, Heart, Database } from 'lucide-react';
 
 const About = () => {
@@ -37,35 +38,44 @@ const About = () => {
   ];
 
   return (
-    <div className = "about-container">
-      <div className = "about-header">
-        <div className = "about-hero">
-          <div className = "hero-icon">
-            <div className = "logo-icon" aria-hidden="true">◆</div>
+    <div className="about-container">
+      <div className="about-header">
+        <div className="about-hero">
+          <div className="hero-icon">
+            <div className="logo-container">
+              <Image
+                src="/logo.png"
+                alt="Momentum Logo"
+                width={64}
+                height={64}
+                className="logo-image"
+                priority
+              />
+            </div>
           </div>
           <h1>Momentum</h1>
-          <p className = "hero-subtitle">Your Personal Productivity Dashboard</p>
+          <p className="hero-subtitle">Your Personal Productivity Dashboard</p>
         </div>
       </div>
 
-      <div className = "about-content">
-        <section className = "about-section">
+      <div className="about-content">
+        <section className="about-section">
           <h2>About Momentum</h2>
-          <p className = "about-description">
+          <p className="about-description">
             Momentum is a comprehensive productivity dashboard designed to help you plan, track, and reflect on your daily activities. 
             Built with modern web technologies, it combines essential productivity tools in one seamless interface to help you build 
             better habits, manage tasks effectively, and maintain a healthy work-life balance.
           </p>
         </section>
 
-        <section className = "features-section">
+        <section className="features-section">
           <h2>Key Features</h2>
-          <div className = "features-grid">
+          <div className="features-grid">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <div key={`feature-${index}`} className = "feature-card">
-                  <div className = "feature-icon" aria-hidden="true">
+                <div key={`feature-${index}`} className="feature-card">
+                  <div className="feature-icon" aria-hidden="true">
                     <Icon size={24} />
                   </div>
                   <h3>{feature.title}</h3>
@@ -76,34 +86,34 @@ const About = () => {
           </div>
         </section>
 
-        <section className = "developer-section">
-          <div className = "developer-card">
-            <div className = "developer-info">
-              <div className = "developer-avatar" aria-hidden="true">
+        <section className="developer-section">
+          <div className="developer-card">
+            <div className="developer-info">
+              <div className="developer-avatar" aria-hidden="true">
                 <User size={32} />
               </div>
-              <div className = "developer-details">
+              <div className="developer-details">
                 <h3>Pratyush Nayak</h3>
-                <p className = "developer-title">Full Stack Developer</p>
-                <p className = "developer-description">
+                <p className="developer-title">Full Stack Developer</p>
+                <p className="developer-description">
                   Passionate about creating intuitive and powerful web applications that help people be more productive. 
                   With expertise in modern JavaScript frameworks and a keen eye for user experience design, 
                   I strive to build tools that make a real difference in people&apos;s daily lives.
                 </p>
-                <div className = "developer-skills">
-                  <span className = "skill-tag">
+                <div className="developer-skills">
+                  <span className="skill-tag">
                     <Code size={14} aria-hidden="true" />
                     Next JS
                   </span>
-                  <span className = "skill-tag">
+                  <span className="skill-tag">
                     <Code size={14} aria-hidden="true" />
                     React JS
                   </span>
-                  <span className = "skill-tag">
+                  <span className="skill-tag">
                     <Database size={14} aria-hidden="true" />
                     Mongo DB
                   </span>
-                  <span className = "skill-tag">
+                  <span className="skill-tag">
                     <Heart size={14} aria-hidden="true" />
                     Tailwind CSS
                   </span>
@@ -113,7 +123,7 @@ const About = () => {
           </div>
         </section>
 
-        <section className = "mission-section">
+        <section className="mission-section">
           <h2>Our Mission</h2>
           <p>
             To empower individuals with the tools they need to achieve their goals, build positive habits, 

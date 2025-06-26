@@ -1987,13 +1987,16 @@ body {
   gap: 2px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  overflow: hidden;
+  overflow: visible; 
   background-color: var(--border-color);
+  position: relative;
+  z-index: 1;
 }
 
 .calendar-day-container {
   position: relative;
   aspect-ratio: 1;
+  z-index: 2;
 }
 
 .calendar-day {
@@ -2011,6 +2014,7 @@ body {
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
+  z-index: 3;
 }
 
 .calendar-day:hover {
@@ -2076,11 +2080,27 @@ body {
   justify-content: center;
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 100; /* Very high z-index */
 }
 
 .add-event-btn:hover {
   background-color: #059669;
   transform: scale(1.1);
+  z-index: 101;
+}
+
+/* Alternative approach - if the above doesn't work, try this */
+.calendar-day-container:has(.calendar-day.selected) {
+  z-index: 50;
+}
+
+/* Fallback - force the selected day container to highest level */
+.calendar-day.selected {
+  z-index: 90;
+}
+
+.calendar-day.selected + .add-event-btn {
+  z-index: 100;
 }
 
 /* Selected Date Events */

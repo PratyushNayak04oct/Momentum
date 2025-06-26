@@ -1,11 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, X, Clock } from 'lucide-react';
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
+  const [events, setEvents] = useState({});
+  const [showEventModal, setShowEventModal] = useState(false);
+  const [eventTitle, setEventTitle] = useState('');
+  const [eventType, setEventType] = useState('event');
+  const [eventTime, setEventTime] = useState('');
 
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -28,6 +33,7 @@ const Calendar = () => {
       newDate.setMonth(prev.getMonth() + direction);
       return newDate;
     });
+    setSelectedDate(null);
   };
 
   const isToday = (day, month, year) => {
@@ -37,13 +43,63 @@ const Calendar = () => {
            year === today.getFullYear();
   };
 
+  const getDateKey = (day, month, year) => {
+    return `${year}-${month}-${day}`;
+  };
+
+  const hasEvents = (day, month, year) => {
+    const dateKey = getDateKey(day, month, year);
+    return events[dateKey] && events[dateKey].length > 0;
+  };
+
   const handleDateSelect = (day) => {
     setSelectedDate(day);
   };
 
-  const renderCalendar = (date) => {
-    const daysInMonth = getDaysInMonth(date);
-    const firstDay = getFirstDayOfMonth(date);
+  const handleAddEvent = (day) => {
+    setSelectedDate(day);
+    setShowEventModal(true);
+  };
+
+  const saveEvent = () => {
+    if (!eventTitle.trim()) return;
+
+    const dateKey = getDateKey(selectedDate, currentDate.getMonth(), currentDate.getFullYear());
+    const newEvent = {
+      id: Date.now().toString(),
+      title: eventTitle,
+      type: eventType,
+      time: eventTime,
+      date: selectedDate
+    };
+
+    setEvents(prev => ({
+      ...prev,
+      [dateKey]: [...(prev[dateKey] || []), newEvent]
+    }));
+
+    setEventTitle('');
+    setEventTime('');
+    setShowEventModal(false);
+  };
+
+  const deleteEvent = (eventId) => {
+    const dateKey = getDateKey(selectedDate, currentDate.getMonth(), currentDate.getFullYear());
+    setEvents(prev => ({
+      ...prev,
+      [dateKey]: prev[dateKey].filter(event => event.id !== eventId)
+    }));
+  };
+
+  const getSelectedDateEvents = () => {
+    if (!selectedDate) return [];
+    const dateKey = getDateKey(selectedDate, currentDate.getMonth(), currentDate.getFullYear());
+    return events[dateKey] || [];
+  };
+
+  const renderCalendar = () => {
+    const daysInMonth = getDaysInMonth(currentDate);
+    const firstDay = getFirstDayOfMonth(currentDate);
     const days = [];
 
     // Empty cells for days before the first day of the month
@@ -59,149 +115,205 @@ const Calendar = () => {
 
     // Days of the month
     for (let day = 1; day <= daysInMonth; day++) {
-      const isTodayDate = isToday(day, date.getMonth(), date.getFullYear());
+      const isTodayDate = isToday(day, currentDate.getMonth(), currentDate.getFullYear());
       const isSelected = selectedDate === day;
+      const hasEventsOnDay = hasEvents(day, currentDate.getMonth(), currentDate.getFullYear());
       
       days.push(
-        <button
-          key={day}
-          type="button"
-          className={`calendar-day ${isTodayDate ? 'today' : ''} ${isSelected ? 'selected' : ''}`}
-          onClick={() => handleDateSelect(day)}
-          aria-label={`Select ${monthNames[date.getMonth()]} ${day}, ${date.getFullYear()}`}
-        >
-          {day}
-        </button>
+        <div key={day} className = "calendar-day-container">
+          <button
+            type="button"
+            className = {`calendar-day ${isTodayDate ? 'today' : ''} ${isSelected ? 'selected' : ''} ${hasEventsOnDay ? 'has-events' : ''}`}
+            onClick={() => handleDateSelect(day)}
+            aria-label={`Select ${monthNames[currentDate.getMonth()]} ${day}, ${currentDate.getFullYear()}`}
+          >
+            {day}
+            {hasEventsOnDay && <div className = "event-dot" />}
+          </button>
+          {isSelected && (
+            <button
+              type="button"
+              className = "add-event-btn"
+              onClick={() => handleAddEvent(day)}
+              aria-label={`Add event for ${monthNames[currentDate.getMonth()]} ${day}`}
+            >
+              <Plus size={12} />
+            </button>
+          )}
+        </div>
       );
     }
 
     return days;
   };
 
-  const getCurrentMonth = () => {
-    return new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-  };
-
-  const getNextMonth = () => {
-    return new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
-  };
-
-  // Sample productivity data - in a real app, this would come from props or context
-  const productivityData = [
-    { 
-      date: `${monthNames[currentDate.getMonth()]} ${Math.max(1, currentDate.getDate() - 3)}, ${currentDate.getFullYear()}`, 
-      score: 85, 
-      note: 'Completed all tasks, felt very productive.' 
-    },
-    { 
-      date: `${monthNames[currentDate.getMonth()]} ${Math.max(1, currentDate.getDate() - 2)}, ${currentDate.getFullYear()}`, 
-      score: 70, 
-      note: 'Some distractions, but overall a good day.' 
-    },
-    { 
-      date: `${monthNames[currentDate.getMonth()]} ${Math.max(1, currentDate.getDate() - 1)}, ${currentDate.getFullYear()}`, 
-      score: 90, 
-      note: 'Focused and efficient, achieved a lot.' 
-    },
-    { 
-      date: `${monthNames[currentDate.getMonth()]} ${currentDate.getDate()}, ${currentDate.getFullYear()}`, 
-      score: 60, 
-      note: 'Low energy, struggled to concentrate.' 
-    },
-    { 
-      date: `${monthNames[currentDate.getMonth()]} ${Math.min(getDaysInMonth(currentDate), currentDate.getDate() + 1)}, ${currentDate.getFullYear()}`, 
-      score: 75, 
-      note: 'Steady progress, good work-life balance.' 
-    }
-  ];
-
   return (
     <div className = "calendar-container">
-      <div className = "calendar-grid">
-        {/* Current Month Calendar */}
-        <div className = "calendar-month">
-          <div className = "calendar-header">
-            <button 
-              type="button"
-              onClick={() => navigateMonth(-1)} 
-              className = "nav-btn"
-              aria-label="Previous month"
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <h3>
-              {monthNames[getCurrentMonth().getMonth()]} {getCurrentMonth().getFullYear()}
-            </h3>
-            <div aria-hidden="true" />
-          </div>
-          <div className = "calendar-weekdays">
-            {dayNames.map((day, index) => (
-              <div key={`current-${day}-${index}`} className = "weekday">
-                {day}
-              </div>
-            ))}
-          </div>
-          <div className = "calendar-days">
-            {renderCalendar(getCurrentMonth())}
-          </div>
+      {/* Single Month Calendar */}
+      <div className = "calendar-month">
+        <div className = "calendar-header">
+          <button 
+            type="button"
+            onClick={() => navigateMonth(-1)} 
+            className = "nav-btn"
+            aria-label="Previous month"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <h3>
+            {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+          </h3>
+          <button 
+            type="button"
+            onClick={() => navigateMonth(1)} 
+            className = "nav-btn"
+            aria-label="Next month"
+          >
+            <ChevronRight size={20} />
+          </button>
         </div>
-
-        {/* Next Month Calendar */}
-        <div className = "calendar-month">
-          <div className = "calendar-header">
-            <div aria-hidden="true" />
-            <h3>
-              {monthNames[getNextMonth().getMonth()]} {getNextMonth().getFullYear()}
-            </h3>
-            <button 
-              type="button"
-              onClick={() => navigateMonth(1)} 
-              className = "nav-btn"
-              aria-label="Next month"
-            >
-              <ChevronRight size={20} />
-            </button>
-          </div>
-          <div className = "calendar-weekdays">
-            {dayNames.map((day, index) => (
-              <div key={`next-${day}-${index}`} className = "weekday">
-                {day}
-              </div>
-            ))}
-          </div>
-          <div className = "calendar-days">
-            {renderCalendar(getNextMonth())}
-          </div>
-        </div>
-      </div>
-
-      <div className = "productivity-history">
-        <h2>
-          {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
-        </h2>
-        <div className = "productivity-table">
-          <div className = "table-header">
-            <div className = "col-date">Date</div>
-            <div className = "col-score">Productivity Score</div>
-            <div className = "col-notes">Notes</div>
-          </div>
-          {productivityData.map((entry, index) => (
-            <div key={`productivity-${index}`} className = "table-row">
-              <div className = "col-date">{entry.date}</div>
-              <div className = "col-score">
-                <div className = "score-bar" role="progressbar" aria-valuenow={entry.score} aria-valuemin="0" aria-valuemax="100">
-                  <div 
-                    className = "score-fill" 
-                    style={{ width: `${entry.score}%` }}
-                  />
-                </div>
-                <span className = "score-number">{entry.score}</span>
-              </div>
-              <div className = "col-notes">{entry.note}</div>
+        
+        <div className = "calendar-weekdays">
+          {dayNames.map((day, index) => (
+            <div key={`day-${index}`} className = "weekday">
+              {day}
             </div>
           ))}
         </div>
+        
+        <div className = "calendar-days">
+          {renderCalendar()}
+        </div>
       </div>
+
+      {/* Selected Date Events */}
+      {selectedDate && (
+        <div className = "selected-date-events">
+          <div className = "events-header">
+            <h3>
+              {monthNames[currentDate.getMonth()]} {selectedDate}, {currentDate.getFullYear()}
+            </h3>
+            <button
+              type="button"
+              className = "add-event-btn-header"
+              onClick={() => handleAddEvent(selectedDate)}
+            >
+              <Plus size={16} />
+              Add Event
+            </button>
+          </div>
+          
+          <div className = "events-list">
+            {getSelectedDateEvents().length === 0 ? (
+              <div className = "no-events">
+                <div className = "no-events-icon">📅</div>
+                <p>No events for this date</p>
+              </div>
+            ) : (
+              getSelectedDateEvents().map(event => (
+                <div key={event.id} className = "event-item">
+                  <div className = "event-content">
+                    <div className = "event-header">
+                      <span className = {`event-type ${event.type}`}>
+                        {event.type === 'task' ? 'Task' : 'Event'}
+                      </span>
+                      {event.time && (
+                        <span className = "event-time">
+                          <Clock size={12} />
+                          {event.time}
+                        </span>
+                      )}
+                    </div>
+                    <h4 className = "event-title">{event.title}</h4>
+                  </div>
+                  <button
+                    type="button"
+                    className = "delete-event-btn"
+                    onClick={() => deleteEvent(event.id)}
+                    aria-label="Delete event"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Event Modal */}
+      {showEventModal && (
+        <div className = "modal-overlay">
+          <div className = "modal-content">
+            <div className = "modal-header">
+              <h3>Add Event for {monthNames[currentDate.getMonth()]} {selectedDate}</h3>
+              <button
+                type="button"
+                className = "modal-close-btn"
+                onClick={() => setShowEventModal(false)}
+              >
+                <X size={20} />
+              </button>
+            </div>
+            
+            <div className = "modal-body">
+              <div className = "form-group">
+                <label htmlFor="event-type">Type</label>
+                <select
+                  id="event-type"
+                  value={eventType}
+                  onChange={(e) => setEventType(e.target.value)}
+                  className = "form-select"
+                >
+                  <option value="event">Event</option>
+                  <option value="task">Task</option>
+                </select>
+              </div>
+              
+              <div className = "form-group">
+                <label htmlFor="event-title">Title</label>
+                <input
+                  id="event-title"
+                  type="text"
+                  value={eventTitle}
+                  onChange={(e) => setEventTitle(e.target.value)}
+                  placeholder="Enter event title..."
+                  className = "form-input"
+                />
+              </div>
+              
+              <div className = "form-group">
+                <label htmlFor="event-time">Time (optional)</label>
+                <input
+                  id="event-time"
+                  type="time"
+                  value={eventTime}
+                  onChange={(e) => setEventTime(e.target.value)}
+                  className = "form-input"
+                />
+              </div>
+            </div>
+            
+            <div className = "modal-footer">
+              <button
+                type="button"
+                className = "btn-secondary"
+                onClick={() => setShowEventModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className = "btn-primary"
+                onClick={saveEvent}
+                disabled={!eventTitle.trim()}
+              >
+                Save Event
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1914,8 +1914,6 @@ body {
 
 /* Calendar */
 
-/* Updated Calendar Styles - Add these to your existing CSS file */
-
 .calendar-container {
   max-width: 800px;
   margin: 0 auto;
@@ -2387,44 +2385,209 @@ body {
   color: var(--text-primary);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .calendar-container {
     max-width: 100%;
     padding: 0 16px;
   }
-  
-  .calendar-month,
+
+  .calendar-month {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .calendar-header {
+    margin-bottom: 16px;
+  }
+
+  .calendar-header h3 {
+    font-size: 18px;
+  }
+
+  .nav-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .calendar-weekdays {
+    margin-bottom: 8px;
+  }
+
+  .weekday {
+    padding: 8px 4px;
+    font-size: 11px;
+  }
+
+  .calendar-days {
+    gap: 1px;
+  }
+
+  .calendar-day-container {
+    aspect-ratio: 1;
+  }
+
+  .calendar-day {
+    min-height: 32px;
+    height: 100%;
+    font-size: 12px;
+    padding: 2px;
+  }
+
+  .add-event-btn {
+    width: 16px;
+    height: 16px;
+    top: -6px;
+    right: -6px;
+  }
+
+  .add-event-btn svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .event-dot {
+    width: 4px;
+    height: 4px;
+    bottom: 1px;
+    right: 1px;
+  }
+
   .selected-date-events {
     padding: 16px;
+    margin-bottom: 16px;
   }
-  
-  .calendar-days {
-    gap: 4px;
-  }
-  
-  .calendar-day {
-    font-size: 12px;
-  }
-  
+
   .events-header {
     flex-direction: column;
-    align-items: flex-start;
     gap: 12px;
+    align-items: flex-start;
   }
-  
+
+  .events-header h3 {
+    font-size: 16px;
+  }
+
+  .add-event-btn-header {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .event-item {
+    padding: 12px;
+  }
+
+  .event-title {
+    font-size: 13px;
+  }
+
   .modal-content {
-    width: 95%;
-    margin: 20px;
+    margin: 16px;
+    width: calc(100% - 32px);
+    max-height: calc(100vh - 32px);
   }
-  
-  .modal-footer {
-    flex-direction: column;
+
+  .modal-body {
+    padding: 16px 0;
   }
-  
-  .btn-primary,
-  .btn-secondary {
-    width: 100%;
+}
+
+@media (max-width: 480px) {
+  .calendar-container {
+    padding: 0 8px;
+  }
+
+  .calendar-month {
+    padding: 12px;
+  }
+
+  .calendar-header h3 {
+    font-size: 16px;
+  }
+
+  .nav-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .weekday {
+    padding: 6px 2px;
+    font-size: 10px;
+  }
+
+  .calendar-day {
+    min-height: 28px;
+    font-size: 11px;
+  }
+
+  .add-event-btn {
+    width: 14px;
+    height: 14px;
+    top: -5px;
+    right: -5px;
+  }
+
+  .add-event-btn svg {
+    width: 8px;
+    height: 8px;
+  }
+
+  .event-dot {
+    width: 3px;
+    height: 3px;
+  }
+
+  .selected-date-events {
+    padding: 12px;
+  }
+
+  .events-header h3 {
+    font-size: 14px;
+  }
+
+  .add-event-btn-header {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  .event-item {
+    padding: 10px;
+  }
+
+  .event-title {
+    font-size: 12px;
+  }
+
+  .event-type {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .event-time {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 320px) {
+  .calendar-day {
+    min-height: 24px;
+    font-size: 10px;
+  }
+
+  .weekday {
+    font-size: 9px;
+    padding: 4px 1px;
+  }
+
+  .add-event-btn {
+    width: 12px;
+    height: 12px;
+    top: -4px;
+    right: -4px;
+  }
+
+  .add-event-btn svg {
+    width: 6px;
+    height: 6px;
   }
 }
 

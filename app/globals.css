@@ -1107,6 +1107,8 @@ body {
   margin: 0 auto;
   text-align: center;
   padding: 20px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .timer-settings {
@@ -1118,9 +1120,9 @@ body {
 
 .preset-btn {
   padding: 12px 24px;
-  background-color: #f8fafc;
-  color: #64748b;
-  border: 1px solid #e2e8f0;
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 2px solid var(--border-color);
   border-radius: 12px;
   font-size: 14px;
   font-weight: 500;
@@ -1129,14 +1131,15 @@ body {
 }
 
 .preset-btn:hover {
-  background-color: #f1f5f9;
-  color: #1e293b;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--primary-color);
 }
 
 .preset-btn.active {
-  background-color: #3b82f6;
+  background-color: var(--primary-color);
   color: white;
-  border-color: #3b82f6;
+  border-color: var(--primary-color);
 }
 
 .timer-display {
@@ -1161,30 +1164,30 @@ body {
 .time-value {
   font-size: 64px;
   font-weight: 300;
-  color: #1e293b;
+  color: var(--text-primary);
   padding: 16px 24px;
-  background-color: #f8fafc;
+  background-color: var(--bg-secondary);
   border-radius: 16px;
-  border: 1px solid #e2e8f0;
+  border: 2px solid var(--border-color);
   min-width: 120px;
 }
 
 .time-separator {
   font-size: 48px;
   font-weight: 300;
-  color: #1e293b;
+  color: var(--text-primary);
   margin-top: -40px;
 }
 
 .time-label {
   font-size: 14px;
-  color: #64748b;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 .timer-settings-panel {
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background-color: var(--bg-secondary);
+  border: 2px solid var(--border-color);
   border-radius: 16px;
   padding: 24px;
   margin-bottom: 32px;
@@ -1208,16 +1211,22 @@ body {
 .setting-group label {
   font-size: 14px;
   font-weight: 500;
-  color: #1e293b;
+  color: var(--text-primary);
 }
 
 .setting-group input {
   padding: 12px;
-  border: 1px solid #e2e8f0;
+  border: 2px solid var(--border-color);
   border-radius: 8px;
-  background-color: white;
-  color: #1e293b;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.setting-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
 }
 
 .setting-checkboxes {
@@ -1231,21 +1240,30 @@ body {
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: #1e293b;
+  color: var(--text-primary);
   cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  transition: all 0.2s ease;
+}
+
+.checkbox-label:hover {
+  background-color: var(--bg-tertiary);
 }
 
 .checkbox-label input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: #3b82f6;
+  accent-color: var(--primary-color);
 }
 
 .save-btn {
   padding: 12px 32px;
-  background-color: #10b981;
+  background-color: var(--success-color);
   color: white;
-  border: none;
+  border: 2px solid var(--success-color);
   border-radius: 12px;
   font-size: 14px;
   font-weight: 600;
@@ -1256,6 +1274,7 @@ body {
 
 .save-btn:hover {
   background-color: #059669;
+  border-color: #059669;
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
 }
@@ -1269,9 +1288,9 @@ body {
 
 .start-btn, .reset-btn {
   padding: 16px 48px;
-  background-color: #3b82f6;
+  background-color: var(--primary-color);
   color: white;
-  border: none;
+  border: 2px solid var(--primary-color);
   border-radius: 16px;
   font-size: 18px;
   font-weight: 600;
@@ -1280,7 +1299,8 @@ body {
 }
 
 .start-btn:hover, .reset-btn:hover {
-  background-color: #2563eb;
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
 }
@@ -1290,17 +1310,21 @@ body {
   flex-direction: column;
   gap: 8px;
   align-items: center;
+  padding: 16px;
+  background-color: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
 }
 
 .session-type {
   font-size: 18px;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--text-primary);
 }
 
 .round-counter {
   font-size: 14px;
-  color: #64748b;
+  color: var(--text-secondary);
 }
 
 /* Tablet Responsive - max-width: 768px */

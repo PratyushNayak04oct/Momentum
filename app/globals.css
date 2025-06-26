@@ -1913,6 +1913,7 @@ body {
 }
 
 /* Calendar */
+
 /* Updated Calendar Styles - Add these to your existing CSS file */
 
 .calendar-container {
@@ -1963,8 +1964,12 @@ body {
 .calendar-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
+  gap: 2px;
   margin-bottom: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--border-color);
 }
 
 .weekday {
@@ -1972,13 +1977,18 @@ body {
   font-size: 12px;
   font-weight: 600;
   color: var(--text-muted);
-  padding: 8px;
+  padding: 12px 8px;
+  background-color: var(--bg-tertiary);
 }
 
 .calendar-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
+  gap: 2px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--border-color);
 }
 
 .calendar-day-container {
@@ -1989,11 +1999,12 @@ body {
 .calendar-day {
   width: 100%;
   height: 100%;
+  min-height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  background: none;
+  border-radius: 0;
+  background-color: var(--bg-secondary);
   border: none;
   color: var(--text-primary);
   font-size: 14px;
@@ -2031,6 +2042,8 @@ body {
 
 .calendar-day.empty {
   cursor: default;
+  background-color: var(--bg-primary);
+  opacity: 0.3;
 }
 
 .event-dot {

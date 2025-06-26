@@ -67,7 +67,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
       )}
 
       {/* Sidebar */}
-      <div className={`sidebar ${isMobile ? (isOpen ? 'sidebar-mobile-open' : 'sidebar-mobile-closed') : ''}`}>
+      <div className = {`sidebar ${isMobile ? (isOpen ? 'sidebar-mobile-open' : 'sidebar-mobile-closed') : ''}`}>
         <div className = "sidebar-header">
           <div className = "logo">
             <Image 
@@ -84,9 +84,6 @@ const Sidebar = ({ activeView, setActiveView }) => {
         </div>
         
         <div className = "sidebar-section">
-          {(!isMobile || isOpen) && (
-            <span className = "section-title">Momentum</span>
-          )}
           <nav className = "nav-menu" role="navigation" aria-label="Main navigation">
             {menuItems.map((item) => {
               const Icon = item.icon;
@@ -96,7 +93,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
                 <button
                   key={item.id}
                   type="button"
-                  className={`nav-item ${isActive ? 'active' : ''}`}
+                  className = {`nav-item ${isActive ? 'active' : ''}`}
                   onClick={() => handleViewChange(item.id)}
                   aria-current={isActive ? 'page' : undefined}
                   aria-label={`Navigate to ${item.label}`}
